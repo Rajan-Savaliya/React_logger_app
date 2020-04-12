@@ -1,0 +1,45 @@
+{
+  "logs": [
+    {
+      "message": "mmmm",
+      "attention": false,
+      "tech": "rjan savalsg",
+      "date": "2020-04-06T11:04:19.702Z",
+      "id": 1
+    },
+    {
+      "message": "mmmmmmmmmmmmm",
+      "attention": false,
+      "tech": "rjan savalsg",
+      "date": "2020-04-06T11:04:42.458Z",
+      "id": 2
+    }
+  ],
+  "techs": [
+    {
+      "firstName": "wyw4y",
+      "lastName": "rw4t",
+      "id": 1
+    },
+    {
+      "firstName": "fffffff",
+      "lastName": "eeeeeeee",
+      "id": 2
+    },
+    {
+      "firstName": "rjan",
+      "lastName": "savalsg",
+      "id": 3
+    },
+    {
+      "firstName": "mark zukerbag",
+      "lastName": "jonsan",
+      "id": 4
+    },
+    {
+      "firstName": "bill",
+      "lastName": "gates ",
+      "id": 5
+    }
+  ]
+}
