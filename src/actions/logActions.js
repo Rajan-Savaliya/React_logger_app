@@ -27,9 +27,12 @@ import {
 // Get logs from server
 export const getLogs = () => async dispatch => {
   try {
-    setLoading();
+    dispatch(setLoading());
 
     const res = await fetch('/logs');
+    if (!res.ok) {
+      throw new Error(`Failed to fetch logs: ${res.status} ${res.statusText}`.trim());
+    }
     const data = await res.json();
 
     dispatch({
@@ -39,7 +42,7 @@ export const getLogs = () => async dispatch => {
   } catch (err) {
     dispatch({
       type: LOGS_ERROR,
-      payload: err.response.statusText
+      payload: err.message
     });
   }
 };
@@ -47,7 +50,7 @@ export const getLogs = () => async dispatch => {
 // Add new log
 export const addLog = log => async dispatch => {
   try {
-    setLoading();
+    dispatch(setLoading());
 
     const res = await fetch('/logs', {
       method: 'POST',
@@ -56,6 +59,9 @@ export const addLog = log => async dispatch => {
         'Content-Type': 'application/json'
       }
     });
+    if (!res.ok) {
+      throw new Error(`Failed to add log: ${res.status} ${res.statusText}`.trim());
+    }
     const data = await res.json();
 
     dispatch({
@@ -65,7 +71,7 @@ export const addLog = log => async dispatch => {
   } catch (err) {
     dispatch({
       type: LOGS_ERROR,
-      payload: err.response.statusText
+      payload: err.message
     });
   }
 }; 
@@ -73,11 +79,14 @@ export const addLog = log => async dispatch => {
 // Delete log from server
 export const deleteLog = id => async dispatch => {
   try {
-    setLoading();
+    dispatch(setLoading());
 
-    await fetch(`/logs/${id}`, {
+    const res = await fetch(`/logs/${id}`, {
       method: 'DELETE'
     });
+    if (!res.ok) {
+      throw new Error(`Failed to delete log: ${res.status} ${res.statusText}`.trim());
+    }
 
     dispatch({
       type: DELETE_LOG,
@@ -86,7 +95,7 @@ export const deleteLog = id => async dispatch => {
   } catch (err) {
     dispatch({
       type: LOGS_ERROR,
-      payload: err.response.statusText
+      payload: err.message
     });
   }
 };
@@ -94,7 +103,7 @@ export const deleteLog = id => async dispatch => {
 // Update log on server
 export const updateLog = log => async dispatch => {
   try {
-    setLoading();
+    dispatch(setLoading());
 
     const res = await fetch(`/logs/${log.id}`, {
       method: 'PUT',
@@ -103,6 +112,10 @@ export const updateLog = log => async dispatch => {
         'Content-Type': 'application/json'
       }
     });
+
+    if (!res.ok) {
+      throw new Error(`Failed to update log: ${res.status} ${res.statusText}`.trim());
+    }
 
     const data = await res.json();
 
@@ -113,7 +126,7 @@ export const updateLog = log => async dispatch => {
   } catch (err) {
     dispatch({
       type: LOGS_ERROR,
-      payload: err.response.statusText
+      payload: err.message
     });
   }
 };
@@ -124,6 +137,9 @@ export const searchLogs = text => async dispatch => {
 
     
     const res = await fetch(`/logs?q=${text}`);
+    if (!res.ok) {
+      throw new Error(`Failed to search logs: ${res.status} ${res.statusText}`.trim());
+    }
     const data = await res.json();
 
     dispatch({
@@ -133,7 +149,7 @@ export const searchLogs = text => async dispatch => {
   } catch (err) {
     dispatch({
       type: LOGS_ERROR,
-      payload: err.response.statusText
+      payload: err.message
     });
   }
 };

@@ -28,7 +28,7 @@ export default (state = initialState, action) => {
     case ADD_LOG:
       return {
         ...state,
-        logs: [...state.logs, action.payload],
+        logs: state.logs ? [...state.logs, action.payload] : [action.payload],
         loading: false
       };
     case DELETE_LOG:
@@ -68,7 +68,8 @@ export default (state = initialState, action) => {
       console.error(action.payload);
       return {
         ...state,
-        error: action.payload
+        error: action.payload,
+        loading: false
       };
     default:
       return state;

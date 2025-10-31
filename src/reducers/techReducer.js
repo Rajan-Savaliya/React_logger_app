@@ -23,7 +23,7 @@ import {
       case ADD_TECH:
         return {
           ...state,
-          techs: [...state.techs, action.payload],
+          techs: state.techs ? [...state.techs, action.payload] : [action.payload],
           loading: false
         };
       case DELETE_TECH:
