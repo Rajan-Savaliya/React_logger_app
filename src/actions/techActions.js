@@ -9,9 +9,12 @@ import {
   // Get techs from server
   export const getTechs = () => async dispatch => {
     try {
-      setLoading();
+      dispatch(setLoading());
   
       const res = await fetch('/techs');
+      if (!res.ok) {
+        throw new Error(`Failed to fetch techs: ${res.status} ${res.statusText}`.trim());
+      }
       const data = await res.json();
   
       dispatch({
@@ -21,7 +24,7 @@ import {
     } catch (err) {
       dispatch({
         type: TECHS_ERROR,
-        payload: err.response.statusText
+        payload: err.message
       });
     }
   };
@@ -29,7 +32,7 @@ import {
   // Add technician to server
   export const addTech = tech => async dispatch => {
     try {
-      setLoading();
+      dispatch(setLoading());
   
       const res = await fetch('/techs', {
         method: 'POST',
@@ -38,6 +41,9 @@ import {
           'Content-Type': 'application/json'
         }
       });
+      if (!res.ok) {
+        throw new Error(`Failed to add tech: ${res.status} ${res.statusText}`.trim());
+      }
       const data = await res.json();
   
       dispatch({
@@ -47,18 +53,21 @@ import {
     } catch (err) {
       dispatch({
         type: TECHS_ERROR,
-        payload: err.response.statusText
+        payload: err.message
       });
     }
   };
   
   export const deleteTech = id => async dispatch => {
     try {
-      setLoading();
+      dispatch(setLoading());
   
-      await fetch(`/techs/${id}`, {
+      const res = await fetch(`/techs/${id}`, {
         method: 'DELETE'
       });
+      if (!res.ok) {
+        throw new Error(`Failed to delete tech: ${res.status} ${res.statusText}`.trim());
+      }
   
       dispatch({
         type: DELETE_TECH,
@@ -67,7 +76,7 @@ import {
     } catch (err) {
       dispatch({
         type: TECHS_ERROR,
-        payload: err.response.statusText
+        payload: err.message
       });
     }
   };
